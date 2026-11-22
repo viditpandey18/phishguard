@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="PhishGuard: explainable detection of scam messages, phishing emails and malicious links in English, Hindi and Hinglish.">
+  <title>PhishGuard · Scam &amp; Phishing Defense Console</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<!-- Icon sprite (Lucide-style, MIT). Referenced with <use href="#i-name">. -->
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ======================================================= SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#/overview">
+      <img class="brand-mark" src="favicon.svg" alt="">
+      <span class="brand-text"><b>PhishGuard</b><small>Defense Console</small></span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <span class="nav-label">Workspace</span>
+      <a href="#/overview" data-nav="overview"><svg><use href="#i-dashboard"/></svg>Overview</a>
+      <a href="#/scanner" data-nav="scanner"><svg><use href="#i-search"/></svg>Threat Scanner</a>
+      <a href="#/shield" data-nav="shield"><svg><use href="#i-phone"/></svg>Phone Shield<span class="nav-tag">Demo</span></a>
+      <a href="#/activity" data-nav="activity"><svg><use href="#i-activity"/></svg>Activity<span class="nav-count" id="navCount">0</span></a>
+      <span class="nav-label">Resources</span>
+      <a href="#/about" data-nav="about"><svg><use href="#i-info"/></svg>How it works</a>
+      <a href="/docs" target="_blank" rel="noopener"><svg><use href="#i-code"/></svg>API reference<svg class="ext"><use href="#i-external"/></svg></a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="status-card" id="engine">
+        <span class="status-dot"></span>
+        <div><b id="engineText">Connecting…</b><small id="engineSub">PhishGuard engine</small></div>
+      </div>
+      <p class="privacy"><svg><use href="#i-lock"/></svg>Analysed in memory. Nothing you scan is stored.</p>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <!-- ========================================================== MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <button class="btn btn-ghost btn-icon only-mobile" id="menuBtn" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+      <div class="page-head">
+        <h1 id="pageTitle">Overview</h1>
+        <p id="pageSub">Real-time scam and phishing defense</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-icon" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark theme"><svg><use href="#i-sun"/></svg></button>
+        <a class="btn btn-outline hide-sm" href="/docs" target="_blank" rel="noopener"><svg><use href="#i-code"/></svg>API</a>
+        <a class="btn btn-primary" href="#/scanner"><svg><use href="#i-search"/></svg><span class="hide-sm">New scan</span></a>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- ===================================================== OVERVIEW -->
+      <section class="page" data-page="overview">
+        <div class="hero card">
+          <div class="hero-copy">
+            <span class="badge badge-outline"><svg><use href="#i-globe"/></svg>English · हिंदी · Hinglish</span>
+            <h2>Catch scams before people fall for them.</h2>
+            <p>PhishGuard checks SMS, WhatsApp, emails and links the way a fraud analyst would: look-alike domains, OTP and KYC lures, spoofed senders. It explains <b>every</b> verdict in plain language.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#/scanner"><svg><use href="#i-search"/></svg>Scan a message</a>
+              <a class="btn btn-outline btn-lg" href="#/shield"><svg><use href="#i-play"/></svg>Live phone demo</a>
+            </div>
+          </div>
+          <form class="quick" id="quickForm" autocomplete="off">
+            <label for="quickInput">Quick check</label>
+            <div class="quick-row">
+              <input class="input" id="quickInput" placeholder="Paste a link or message…" maxlength="20000">
+              <button class="btn btn-primary" type="submit">Check</button>
+            </div>
+            <div class="quick-samples">
+              <span class="muted">Try:</span>
+              <button type="button" class="link-btn" data-quick="http://paypa1.com/signin">paypa1.com</button>
+              <button type="button" class="link-btn" data-quick="Aapka KYC pending hai, account aaj raat band ho jayega. Turant link pe click karein: bit.ly/kyc-upd8">Hinglish KYC</button>
+              <button type="button" class="link-btn" data-quick="https://github.com/python/cpython">github.com</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="kpis">
+          <div class="card kpi"><div class="kpi-head"><span>Scans this session</span><svg><use href="#i-activity"/></svg></div><b id="kScans">0</b><small id="kScansSub">Run a scan to get started</small></div>
+          <div class="card kpi"><div class="kpi-head"><span>Threats caught</span><svg><use href="#i-shield-alert"/></svg></div><b id="kThreats" class="tone-danger">0</b><small>phishing + scam verdicts</small></div>
+          <div class="card kpi"><div class="kpi-head"><span>Avg engine latency</span><svg><use href="#i-zap"/></svg></div><b id="kLatency">–</b><small>server-side analysis time</small></div>
+          <div class="card kpi"><div class="kpi-head"><span>Detection layers</span><svg><use href="#i-cpu"/></svg></div><b>4</b><small>URL · language · headers · ML</small></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><h3>Recent activity</h3><p>Latest scans from the scanner and Phone Shield</p></div><a class="btn btn-ghost btn-sm" href="#/activity">View all<svg><use href="#i-chevron"/></svg></a></div>
+            <div class="table-wrap"><table class="table table-hover"><thead><tr><th>Input</th><th>Verdict</th><th class="num">Risk</th><th class="num">Time</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+            <div class="empty" id="recentEmpty"><svg><use href="#i-search"/></svg><b>No scans yet</b><span>Results from the scanner and the phone demo will appear here.</span></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div><h3>Threat breakdown</h3><p>Tactics detected across this session</p></div></div>
+            <div class="breakdown" id="breakdown"></div>
+            <div class="empty" id="breakdownEmpty"><svg><use href="#i-shield"/></svg><b>Nothing detected yet</b><span>Scan a sample scam to see which tactics it uses.</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div><h3>What PhishGuard catches</h3><p>Real-world scam patterns from India. Click any one to analyse a sample.</p></div></div>
+          <div class="threat-grid" id="threatGrid"></div>
+        </div>
+      </section>
+
+      <!-- ====================================================== SCANNER -->
+      <section class="page" data-page="scanner" hidden>
+        <div class="scanner">
+          <div class="card input-card">
+            <div class="card-header"><div><h3>Input</h3><p>Links are analysed, never opened.</p></div></div>
+            <div class="segmented" id="mode" role="tablist" aria-label="Input type">
+              <button data-mode="auto" class="active" role="tab"><svg><use href="#i-sparkles"/></svg>Auto</button>
+              <button data-mode="text" role="tab"><svg><use href="#i-message"/></svg>Message</button>
+              <button data-mode="url" role="tab"><svg><use href="#i-link"/></svg>URL</button>
+              <button data-mode="email" role="tab"><svg><use href="#i-mail"/></svg>Email</button>
+            </div>
+            <div class="dropzone" id="dropzone">
+              <textarea class="textarea" id="content" rows="10" maxlength="2000000" spellcheck="false" placeholder="Paste an SMS or WhatsApp message, a URL, or a full email with headers…"></textarea>
+              <div class="drop-overlay"><svg><use href="#i-upload"/></svg>Drop .eml file to scan</div>
+            </div>
+            <div class="file-chip hidden" id="fileChip"><svg><use href="#i-file"/></svg><span id="fileName"></span><button class="btn btn-ghost btn-icon btn-xs" id="fileRemove" aria-label="Remove file"><svg><use href="#i-x"/></svg></button></div>
+            <div class="input-actions">
+              <label class="btn btn-outline btn-sm file-btn"><svg><use href="#i-upload"/></svg>Upload .eml<input type="file" id="eml" accept=".eml,message/rfc822"></label>
+              <span class="spacer"></span>
+              <span class="hint hide-sm"><kbd>Ctrl</kbd><kbd>Enter</kbd></span>
+              <button class="btn btn-ghost btn-sm" id="clear">Clear</button>
+              <button class="btn btn-primary" id="scan"><svg><use href="#i-search"/></svg><span class="btn-label">Analyze</span></button>
+            </div>
+            <div class="samples">
+              <span class="samples-title">Sample inputs</span>
+              <div class="sample-list" id="examples"></div>
+            </div>
+            <details class="disclosure">
+              <summary>API key <span class="muted">(only if the server requires one)</span></summary>
+              <input class="input" id="apiKey" type="password" placeholder="x-api-key" autocomplete="off">
+            </details>
+          </div>
+
+          <div class="card result-card" id="resultCard" aria-live="polite">
+            <div id="empty" class="state">
+              <div class="state-icon"><svg><use href="#i-shield"/></svg></div>
+              <h3>No analysis yet</h3>
+              <p>Paste something on the left or pick a sample. You'll get a risk score, the exact red flags, and what to do next.</p>
+            </div>
+
+            <div id="scanning" class="state hidden">
+              <div class="spinner"></div>
+              <h3>Analyzing…</h3>
+              <ol class="progress-steps" id="steps">
+                <li>Normalizing text &amp; removing obfuscation</li>
+                <li>Checking links for look-alike domains</li>
+                <li>Reading language &amp; header signals</li>
+                <li>Scoring evidence</li>
+              </ol>
+            </div>
+
+            <div id="result" class="hidden">
+              <div class="verdict">
+                <div class="ring">
+                  <svg viewBox="0 0 120 120"><circle class="ring-track" cx="60" cy="60" r="52"/><circle id="gaugeArc" class="ring-arc" cx="60" cy="60" r="52"/></svg>
+                  <div class="ring-label"><b id="score">0</b><span>risk</span></div>
+                </div>
+                <div class="verdict-body">
+                  <div class="verdict-top"><span id="badge" class="badge"></span><span id="confidence" class="muted small"></span></div>
+                  <h2 id="headline"></h2>
+                  <p id="explanation"></p>
+                </div>
+              </div>
+
+              <div id="action" class="alert"><svg class="alert-icon"><use id="actionIcon" href="#i-check"/></svg><div><b id="actionTitle">Recommended action</b><p id="actionText"></p></div></div>
+
+              <div id="highlightBlock" class="section hidden">
+                <div class="section-title">Detected in your input</div>
+                <div id="highlight" class="highlight"></div>
+                <div class="legend"><span><i class="lg high"></i>High</span><span><i class="lg medium"></i>Medium</span><span><i class="lg low"></i>Low</span></div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Why we flagged it <span id="flagCount" class="badge badge-danger badge-sm"></span></div>
+                <ul id="flags" class="signal-list"></ul>
+                <p id="noFlags" class="muted small hidden">No red flags were found.</p>
+              </div>
+
+              <div id="mitigBlock" class="section hidden">
+                <div class="section-title">Reassuring signals</div>
+                <ul id="mitig" class="signal-list"></ul>
+              </div>
+
+              <details class="disclosure tech">
+                <summary>Technical details</summary>
+                <div class="tech-grid">
+                  <div><div class="section-title">Layer scores</div><div id="layers" class="layers"></div></div>
+                  <div><div class="section-title">Links analysed <span class="muted">(defanged)</span></div><ul id="urls" class="url-list"></ul></div>
+                </div>
+                <div class="section-title">Engine</div>
+                <div id="meta" class="meta"></div>
+                <div class="section-title">Raw response</div>
+                <pre id="raw" class="code"></pre>
+              </details>
+
+              <div class="feedback">
+                <span>Was this verdict wrong?</span>
+                <div class="btn-group" id="fbChips">
+                  <button class="btn btn-outline btn-xs" data-label="safe">Safe</button>
+                  <button class="btn btn-outline btn-xs" data-label="suspicious">Suspicious</button>
+                  <button class="btn btn-outline btn-xs" data-label="phishing">Phishing</button>
+                  <button class="btn btn-outline btn-xs" data-label="scam">Scam</button>
+                </div>
+              </div>
+            </div>
+            <div id="error" class="alert alert-danger hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================= PHONE SHIELD -->
+      <section class="page" data-page="shield" hidden>
+        <div class="shield">
+          <div class="phone-col">
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar"><span id="clock">9:41</span><span class="sb-icons"><i></i><i></i><i></i><b>87%</b></span></div>
+                <div id="toast" class="headsup hidden">
+                  <div class="hu-app"><svg><use href="#i-shield-alert"/></svg>PhishGuard Shield · now</div>
+                  <b id="toastTitle"></b>
+                  <span id="toastBody"></span>
+                </div>
+                <div class="app-bar">
+                  <b>Messages</b>
+                  <span class="prot"><svg><use href="#i-shield-check"/></svg>Protected by PhishGuard</span>
+                </div>
+                <div class="ptabs" id="ptabs">
+                  <button data-tab="inbox" class="active">Inbox<span id="inboxCount">0</span></button>
+                  <button data-tab="blocked">Blocked<span id="blockedCount" class="red">0</span></button>
+                </div>
+                <div class="screen">
+                  <ul id="inbox" class="msgs"></ul>
+                  <ul id="blocked" class="msgs hidden"></ul>
+                  <div id="phoneEmpty" class="phone-empty"><svg><use href="#i-message"/></svg><span>Press <b>Start demo</b> to receive messages</span></div>
+                </div>
+                <div class="navbar"><i></i></div>
+              </div>
+            </div>
+            <p class="caption">Simulated device. Every message is really scored by the live engine. The real Android app is in <code>mobile/android</code>.</p>
+          </div>
+
+          <div class="shield-side">
+            <div class="card">
+              <div class="card-header">
+                <div><h3>Live interception demo</h3><p>11 real-world messages arrive one by one. Scams are quarantined before they can be opened.</p></div>
+              </div>
+              <div class="demo-controls">
+                <button id="demoStart" class="btn btn-primary"><svg><use id="demoIcon" href="#i-play"/></svg><span id="demoLabel">Start demo</span></button>
+                <button id="demoReset" class="btn btn-outline"><svg><use href="#i-rotate"/></svg>Reset</button>
+                <span class="spacer"></span>
+                <label class="switch"><input type="checkbox" id="demoFast"><span class="track"></span>Fast mode</label>
+              </div>
+              <div class="sep"></div>
+              <div class="compose">
+                <span class="field-label">Send your own message to the phone</span>
+                <div class="compose-row">
+                  <select class="select" id="injApp" aria-label="Channel"><option value="sms">SMS</option><option value="whatsapp">WhatsApp</option><option value="gmail">Gmail</option></select>
+                  <input class="input" id="injSender" placeholder="Sender" value="+91 90000 12345" maxlength="40" aria-label="Sender">
+                </div>
+                <div class="compose-row">
+                  <input class="input" id="injText" placeholder="Type a message…" maxlength="2000" aria-label="Message">
+                  <button id="injSend" class="btn btn-primary"><svg><use href="#i-send"/></svg>Send</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats">
+              <div class="card stat"><span>Scanned</span><b id="stScanned">0</b></div>
+              <div class="card stat"><span>Blocked</span><b id="stBlocked" class="tone-danger">0</b></div>
+              <div class="card stat"><span>Warned</span><b id="stWarned" class="tone-warning">0</b></div>
+              <div class="card stat"><span>Delivered</span><b id="stSafe" class="tone-success">0</b></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><div><h3>Event log</h3><p>Click a row to open the full analysis.</p></div></div>
+              <div class="table-wrap log-wrap"><table class="table table-hover"><thead><tr><th>Time</th><th>Action</th><th>From</th><th>Reason</th><th class="num">Risk</th></tr></thead><tbody id="log"></tbody></table></div>
+              <div class="empty" id="logEmpty"><svg><use href="#i-bell"/></svg><b>No events yet</b><span>Start the demo to watch messages being intercepted.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== ACTIVITY -->
+      <section class="page" data-page="activity" hidden>
+        <div class="card">
+          <div class="card-header">
+            <div><h3>Scan history</h3><p>Kept in this browser tab only. Close or refresh the page and it's gone.</p></div>
+            <div class="toolbar">
+              <div class="segmented segmented-sm" id="filter">
+                <button data-filter="all" class="active">All</button>
+                <button data-filter="threat">Threats</button>
+                <button data-filter="suspicious">Suspicious</button>
+                <button data-filter="safe">Safe</button>
+              </div>
+              <button class="btn btn-outline btn-sm" id="clearHistory"><svg><use href="#i-trash"/></svg>Clear</button>
+            </div>
+          </div>
+          <div class="table-wrap"><table class="table table-hover"><thead><tr><th>Time</th><th>Source</th><th>Type</th><th>Input</th><th>Verdict</th><th class="num">Risk</th><th class="num">Latency</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+          <div class="empty" id="historyEmpty"><svg><use href="#i-activity"/></svg><b>No scans match</b><span>Run a scan or start the Phone Shield demo.</span></div>
+        </div>
+      </section>
+
+      <!-- ======================================================== ABOUT -->
+      <section class="page" data-page="about" hidden>
+        <div class="layer-grid">
+          <div class="card layer-card"><span class="icon-box"><svg><use href="#i-link"/></svg></span><h3>URL forensics</h3><p>Look-alike and homoglyph domains (<code>paypa1.com</code>, Cyrillic <code>аpple</code>), brand names buried in subdomains, shorteners, raw-IP hosts, abused TLDs, free-hosting phishing kits.</p></div>
+          <div class="card layer-card"><span class="icon-box"><svg><use href="#i-message"/></svg></span><h3>Language signals</h3><p>Urgency, threats, "digital arrest", KYC/PAN lures, KBC lotteries, job and investment scams, AnyDesk requests. Recognises OTP <i>requests</i> but not "never share your OTP" advice.</p></div>
+          <div class="card layer-card"><span class="icon-box"><svg><use href="#i-mail"/></svg></span><h3>Email authentication</h3><p>SPF / DKIM / DMARC results, Reply-To and Return-Path mismatches, display-name spoofing, brands sending from Gmail, dangerous attachments like <code>invoice.pdf.exe</code>.</p></div>
+          <div class="card layer-card"><span class="icon-box"><svg><use href="#i-cpu"/></svg></span><h3>Explainable scoring</h3><p>Every signal adds weighted log-odds; the total is calibrated into a probability. Each red flag shows its exact contribution, so there's no black box.</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div><h3>From message to verdict</h3><p>How a phone app or mail gateway uses the engine.</p></div></div>
+          <ol class="pipeline">
+            <li><span>1</span><div><b>Message arrives</b><p>SMS, WhatsApp or Gmail notification on the device</p></div></li>
+            <li><span>2</span><div><b>Normalise</b><p>Strip zero-width characters, map look-alike letters, un-defang links</p></div></li>
+            <li><span>3</span><div><b>Analyse</b><p>URL, language, header and ML layers run in milliseconds</p></div></li>
+            <li><span>4</span><div><b>Act</b><p>Scam? The notification is hidden and quarantined with a reason</p></div></li>
+          </ol>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><h3>Privacy &amp; security by design</h3></div></div>
+            <ul class="checklist">
+              <li><svg><use href="#i-check"/></svg>Messages are analysed in memory and never stored. Feedback keeps detection signals only.</li>
+              <li><svg><use href="#i-check"/></svg>Links are never visited. External lookups are off by default.</li>
+              <li><svg><use href="#i-check"/></svg>PII (phones, UPI IDs, cards, Aadhaar, PAN) is redacted from logs.</li>
+              <li><svg><use href="#i-check"/></svg>Rate limiting, size limits, strict CSP, and API-key auth.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-header"><div><h3>Built with</h3></div></div>
+            <div class="stack">
+              <span class="badge badge-outline">Python 3.11+</span><span class="badge badge-outline">FastAPI</span><span class="badge badge-outline">Pydantic</span>
+              <span class="badge badge-outline">NumPy TF-IDF + LR</span><span class="badge badge-outline">Optional XLM-R / MuRIL</span>
+              <span class="badge badge-outline">Android · Kotlin</span><span class="badge badge-outline">Docker</span>
+            </div>
+            <p class="muted small stack-note">The companion Android app, <b>PhishGuard Shield</b>, lives in <code>mobile/android</code>. It reads SMS and notifications and checks each one with this API. Its source is included; build and run it with Android Studio.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>

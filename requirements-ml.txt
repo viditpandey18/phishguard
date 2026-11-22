@@ -1,0 +1,9 @@
+# Optional: training-time comparisons and the transformer model.
+-r requirements.txt
+scikit-learn>=1.4
+shap>=0.45
+pandas>=2.2
+torch>=2.2
+transformers>=4.40
+datasets>=2.18
+accelerate>=0.29

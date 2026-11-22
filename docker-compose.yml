@@ -1,0 +1,72 @@
+# docker compose up --build                       -> API on :8000
+# docker compose --profile ui up --build          -> + Streamlit UI on :8501
+# docker compose --profile sandbox up --build     -> isolated deep-scan instance (active probing) on :8100
+
+x-hardening: &hardening
+  read_only: true
+  tmpfs: ["/tmp"]
+  cap_drop: ["ALL"]
+  security_opt: ["no-new-privileges:true"]
+  restart: unless-stopped
+
+services:
+  api:
+    <<: *hardening
+    build: { context: ., args: { EXTRAS: "" } }
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PG_ENABLE_ACTIVE_PROBING: "false"   # never on the main API
+    ports: ["127.0.0.1:8000:8000"]         # bind locally; put a TLS reverse proxy in front for remote access
+    volumes:
+      - ./phishguard/models/artifacts:/app/phishguard/models/artifacts:ro
+      - feedback:/app/data/feedback
+    deploy:
+      resources: { limits: { cpus: "2", memory: 1g } }
+    networks: [internal]
+
+  ui:
+    profiles: ["ui"]
+    <<: *hardening
+    build: { context: ., args: { EXTRAS: "ui" } }
+    command: ["streamlit", "run", "ui/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0",
+              "--browser.gatherUsageStats=false"]
+    environment:
+      PHISHGUARD_API: http://api:8000
+      HOME: /tmp
+    volumes: ["./ui:/app/ui:ro"]
+    ports: ["127.0.0.1:8501:8501"]
+    depends_on: [api]
+    networks: [internal]
+
+  # Deep-scan instance: the ONLY place allowed to contact suspect servers
+  # (redirect chain, TLS certificate). Separate network, no volumes, no
+  # access to the internal network, strict limits. Require an API key.
+  sandbox:
+    profiles: ["sandbox"]
+    <<: *hardening
+    build: { context: ., args: { EXTRAS: "" } }
+    environment:
+      PG_ENABLE_ACTIVE_PROBING: "true"
+      PG_ENABLE_NETWORK_INTEL: "true"
+      PG_PROBE_TIMEOUT_S: "4"
+      PG_PROBE_MAX_REDIRECTS: "5"
+      PG_API_KEYS: ${PG_SANDBOX_API_KEY:?set PG_SANDBOX_API_KEY}
+      PG_RATE_LIMIT_PER_MINUTE: "10"
+      PG_FEEDBACK_FILE: /tmp/feedback.jsonl
+    ports: ["127.0.0.1:8100:8000"]
+    deploy:
+      resources: { limits: { cpus: "1", memory: 512m, pids: 128 } }
+    networks: [egress_only]
+    # Recommended in production: an egress proxy/firewall that blocks RFC1918,
+    # link-local (169.254.0.0/16, cloud metadata) and your corporate ranges.
+
+volumes:
+  feedback: {}
+
+networks:
+  internal:
+    driver: bridge
+  egress_only:
+    driver: bridge

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PhishGuard" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/pg_cyan</item>
+        <item name="colorOnPrimary">@color/pg_bg</item>
+        <item name="colorSecondary">@color/pg_violet</item>
+        <item name="android:colorBackground">@color/pg_bg</item>
+        <item name="android:windowBackground">@color/pg_bg</item>
+        <item name="android:statusBarColor">@color/pg_bg</item>
+        <item name="android:navigationBarColor">@color/pg_bg</item>
+    </style>
+
+    <style name="PG.Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:background">@drawable/card_bg</item>
+    </style>
+
+    <style name="PG.Section">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/pg_muted</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+</resources>

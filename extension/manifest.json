@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard (stub)",
+  "version": "0.1.0",
+  "description": "Check links and selected text with your PhishGuard API. Links are scanned lexically; the extension never opens them.",
+  "permissions": ["contextMenus", "storage", "notifications"],
+  "host_permissions": ["http://localhost:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "PhishGuard" },
+  "options_ui": { "page": "popup.html", "open_in_tab": false }
+}

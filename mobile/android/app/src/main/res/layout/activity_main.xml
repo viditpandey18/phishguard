@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="28dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="32dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PhishGuard Shield"
+                    android:textColor="@color/pg_text"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blocks scam SMS, WhatsApp and email alerts"
+                    android:textColor="@color/pg_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Status -->
+        <LinearLayout style="@style/PG.Card">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Protection active"
+                android:textColor="@color/pg_safe"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStatusDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/pg_muted"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/pg_text"
+                android:textSize="14sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/swProtection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Protection on"
+                android:textColor="@color/pg_text" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/swStrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Also hide 'suspicious' messages"
+                android:textColor="@color/pg_text" />
+        </LinearLayout>
+
+        <!-- Permissions -->
+        <LinearLayout style="@style/PG.Card">
+
+            <TextView
+                style="@style/PG.Section"
+                android:text="Setup" />
+
+            <Button
+                android:id="@+id/btnListener"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Enable notification access" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Lets PhishGuard read and hide scam notifications from WhatsApp, Gmail and your SMS app. If the switch is greyed out: App info > ⋮ > Allow restricted settings."
+                android:textColor="@color/pg_muted"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnSms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Allow SMS scanning" />
+
+            <Button
+                android:id="@+id/btnNotif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Allow alerts" />
+        </LinearLayout>
+
+        <!-- Server -->
+        <LinearLayout style="@style/PG.Card">
+
+            <TextView
+                style="@style/PG.Section"
+                android:text="PhishGuard server" />
+
+            <EditText
+                android:id="@+id/etServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="http://192.168.1.10:8000"
+                android:importantForAutofill="no"
+                android:inputType="textUri"
+                android:textColor="@color/pg_text"
+                android:textColorHint="@color/pg_muted" />
+
+            <EditText
+                android:id="@+id/etKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="API key (if PG_API_KEYS is set)"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textColor="@color/pg_text"
+                android:textColorHint="@color/pg_muted" />
+
+            <Button
+                android:id="@+id/btnTest"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save &amp; test connection" />
+
+            <TextView
+                android:id="@+id/tvTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pg_muted"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Try it -->
+        <LinearLayout style="@style/PG.Card">
+
+            <TextView
+                style="@style/PG.Section"
+                android:text="Test a message" />
+
+            <EditText
+                android:id="@+id/etSample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="Paste a message…"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:text="Aapka KYC pending hai, account aaj raat band ho jayega. Turant link pe click karein: bit.ly/kyc-upd8"
+                android:textColor="@color/pg_text"
+                android:textColorHint="@color/pg_muted" />
+
+            <Button
+                android:id="@+id/btnScan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scan" />
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pg_text"
+                android:textIsSelectable="true"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Blocked -->
+        <LinearLayout style="@style/PG.Card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/PG.Section"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Quarantine" />
+
+                <Button
+                    android:id="@+id/btnClear"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llThreats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

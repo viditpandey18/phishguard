@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pg_bg">#0B1020</color>
+    <color name="pg_card">#151C36</color>
+    <color name="pg_line">#26305A</color>
+    <color name="pg_text">#E6E9F5</color>
+    <color name="pg_muted">#8B93B3</color>
+    <color name="pg_cyan">#22D3EE</color>
+    <color name="pg_violet">#A78BFA</color>
+    <color name="pg_safe">#34D399</color>
+    <color name="pg_warn">#FBBF24</color>
+    <color name="pg_bad">#F43F5E</color>
+</resources>

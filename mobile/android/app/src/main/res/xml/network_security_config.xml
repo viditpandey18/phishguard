@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plain HTTP is allowed so the app can reach a PhishGuard server on your
+     laptop over Wi-Fi (http://192.168.x.x:8000) during development/demos.
+     For a real deployment, serve the API over HTTPS and set this to false. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

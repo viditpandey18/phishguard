@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+# datasets contain real phishing + PII: never commit
+data/raw/
+data/processed/
+data/feedback/
+reports/
+phishguard/models/artifacts/
+*.egg-info/

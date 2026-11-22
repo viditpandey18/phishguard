@@ -1,0 +1,12 @@
+.venv
+.git
+**/__pycache__
+.pytest_cache
+.env
+data/raw
+data/processed
+data/feedback
+reports
+notebooks
+tests
+extension
