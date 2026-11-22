@@ -1,0 +1,11 @@
+# Railway config: https://docs.railway.com/reference/config-as-code
+# Railway injects PORT; the Dockerfile's uvicorn command listens on it.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
