@@ -11,3 +11,5 @@ data/feedback/
 reports/
 phishguard/models/artifacts/
 *.egg-info/
+build/
+dist/
