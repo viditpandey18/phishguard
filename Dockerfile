@@ -21,9 +21,12 @@ RUN useradd --system --uid 10001 --no-create-home phishguard \
     && chown -R phishguard /app/data/feedback
 USER phishguard
 
+# PORT / WEB_CONCURRENCY are set by hosting platforms (Render, Railway, Heroku-style);
+# locally they default to 8000 and 2 workers.
+ENV PORT=8000 WEB_CONCURRENCY=2
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-    CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2).status==200 else 1)"
+    CMD python -c "import os,urllib.request,sys; sys.exit(0 if urllib.request.urlopen(f'http://127.0.0.1:{os.environ[\"PORT\"]}/healthz', timeout=2).status==200 else 1)"
 
 # --proxy-headers only matters when PG_TRUST_PROXY_HEADERS=true behind a trusted proxy.
-CMD ["uvicorn", "phishguard.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--no-server-header"]
+CMD ["sh", "-c", "exec uvicorn phishguard.api.main:app --host 0.0.0.0 --port \"$PORT\" --workers \"$WEB_CONCURRENCY\" --no-server-header"]

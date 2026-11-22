@@ -45,6 +45,8 @@ docker compose up --build                     # API on 127.0.0.1:8000 (read-only
 docker compose --profile ui up --build        # + Streamlit UI on :8501
 ```
 
+**Deploy to Render (free):** push this repo to GitHub, then in Render choose *New → Blueprint* and pick the repo. `render.yaml` builds the Dockerfile, health-checks `/healthz`, and serves the UI at `https://<service>.onrender.com/ui/`. Free instances sleep after ~15 min idle, so the first request takes ~30–50 s.
+
 **Android app (PhishGuard Shield):** `mobile/android` hides scam SMS, WhatsApp and Gmail notifications on your phone. Run the server with `.\run.ps1 -Lan` so the phone can reach it. Setup and limits: [mobile/README.md](mobile/README.md).
 
 Browser extension stub: load `extension/` as an unpacked extension in Chrome. Add its origin to `PG_CORS_ORIGINS`. Right-click a link or a text selection and choose **PhishGuard: scan**.

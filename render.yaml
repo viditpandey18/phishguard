@@ -1,0 +1,30 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Deploy: Render dashboard -> New -> Blueprint -> pick this GitHub repo.
+services:
+  - type: web
+    name: phishguard
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: WEB_CONCURRENCY
+        value: "1"            # free instance has 512 MB RAM
+      - key: PG_LOG_JSON
+        value: "true"
+      # Public demo: no API key, so the web UI works for everyone. To lock the API
+      # down, add PG_API_KEYS (comma-separated) under Environment in the dashboard;
+      # the Android app and the web UI then need that key.
+      # Render's proxy is in front of the app, so every visitor shares one
+      # rate-limit bucket (X-Forwarded-For is client-controlled, so it isn't
+      # trusted). These values act as an overall cap that protects the free instance.
+      - key: PG_RATE_LIMIT_PER_MINUTE
+        value: "300"
+      - key: PG_RATE_LIMIT_BURST
+        value: "60"
+      # Never store message content; network lookups stay off.
+      - key: PG_STORE_CONTENT
+        value: "false"
+      - key: PG_ENABLE_NETWORK_INTEL
+        value: "false"
